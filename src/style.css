@@ -1,71 +1,29 @@
-h1, h2{ text-align: center;}
-h2{color: red;}
-#balloon-map{
-    width: 224px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: auto;
+body {
+  background: grey;
 }
-.balloon {
-    position: relative;
-    flex-grow: 1;
-    width: 50px;
-    margin: 3px;
-    background: rgb(20,189,34);
-    opacity: .9;
-    border-radius: 50%;
-    height: 50px;
-    cursor: pointer; 
-    animation: float 6s ease-in-out infinite;
+#container{
+    width: 100%;
+    height: 100vh;
 }
-.balloon:after {
-    position: absolute;
-    background: inherit;
-    bottom: -5px;
-    left: 18px;
-    display: block;
-    content: '';
-    height: 10px;
-    width: 3px;
-    border-radius: 100%;
+.martian {
+  width: fit-content;
+  position: relative;
+  left: 100%;
+  top: 100%;
+
+  cursor: pointer;
+  animation: fly 3s linear infinite;
 }
-.balloon:hover{ animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; }
-.balloon.popped { visibility: hidden; }
-.balloon.popped:after { visibility: hidden; }
+
+.martian.killed { visibility: hidden; }
+
+.alien {
+  font-size: 90px;
+}
 
 
 
 /* ANIMATIONS */
-@keyframes float {
-	0% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
-	50% {
-		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
-		transform: translatey(-20px);
-	}
-	100% {
-		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-		transform: translatey(0px);
-	}
+@keyframes fly {
+	100% {top: 0%; left: 0%}
 }
-
-@keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
-    }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
-    }
-  
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
-    }
-  
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
-    }
-  }
