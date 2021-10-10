@@ -10,7 +10,7 @@ a) Open this link in your browser with gitpod (recommended): https://gitpod.io#h
 
 b) You can clone this repository on your local computer:
 ```sh
-$ git clone https://github.com/breatheco-de/exercise-pop-baloons-javascript.git
+$ git clone https://github.com/peibol888/MarcianitosGame.git
 ```
 
 Run the website by typing the following command on your terminal: `$ npx http-server --yes -c-1`
