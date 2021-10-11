@@ -11,7 +11,7 @@ html, body {
 }
 
 .alien {
-  font-size: 90px;
+  font-size: 80px;
 } 
 
 .alienDiv {
@@ -21,36 +21,32 @@ html, body {
   top: 100%;
 
   cursor: pointer;
-  animation: fly 5s linear;
 }
 
-.neon {
+.neonClass {
   animation: flicker 1.5s infinite;
-  color: #fff;
 }
-
 
 
 /* ANIMATIONS */
 @keyframes fly {
 	100% {top: -15%}
 }
+@keyframes neon {
+	100% {left: 0%}
+}
 
-  /* Flickering animation */
-  @keyframes flicker {
-    
-    0%, 50%, 100% {
-  
-        text-shadow:
-        0 0 4px #fff,
-        0 0 11px #fff,
-        0 0 19px #fff,
-        0 0 40px #0fa,
-        0 0 70px #0fa;
-    
-    }
-    
-    25%, 75% {        
-        text-shadow: none;
-    } 
+/* Flickering animation */
+@keyframes flicker {
+  0%, 50%, 100% {
+    text-shadow:
+    0 0 4px #fff,
+    0 0 11px #fff,
+    0 0 19px #fff,
+    0 0 40px #0fa,
+    0 0 70px #0fa; 
+  }
+  25%, 75% {        
+    text-shadow: none;
+  }
 }
