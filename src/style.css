@@ -5,35 +5,95 @@ html, body {
   background-color: white;
   overflow: hidden;
 }
-#container {
-  min-height: 100%;
-  background-color: rgb(0, 0, 0);
+header {
+  background: rgb(255, 0, 0);
+  height: 2%;
 }
 
-.alien {
-  font-size: 80px;
-} 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.powers-container {
+  height: 100%;
+  background-color: rgb(63, 63, 63);
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+button.power {
+  border: none;
+  color: black;
+  background-color: rgb(63, 63, 63);
+  font-size: 25px;
+  font-weight: 1000;
+}
+button.power-active {
+  cursor: pointer;
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa,
+    0 0 92px #0fa,
+    0 0 105px #0fa,
+    0 0 121px #0fa;
+}
 
+.lifes-container {
+  height: 100%;
+  background-color: rgb(90, 250, 90);
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.life {
+  color: red;
+  font-size: 25px;
+}
+
+#container {
+  position: relative;
+  min-height: 93%;
+  background-color: rgb(0, 0, 0);
+}
 .alienDiv {
   width: fit-content;
   position: absolute;
-  /* Cambiar a top: 100% para el juego */
   top: 100%;
-
   cursor: pointer;
 }
-
+.alien {
+  font-size: 70px;
+} 
 .neonClass {
   animation: flicker 1.5s infinite;
 }
 
 
+
+
 /* ANIMATIONS */
 @keyframes fly {
-	100% {top: -15%}
+	100% {top: -10%}
 }
 @keyframes neon {
-	100% {left: 0%}
+	100% {left: -5%}
 }
 
 /* Flickering animation */
