@@ -1,6 +1,6 @@
-# "Marcianitos" game using Javascript, HTML/CSS 🎈🎊
+# Aliens game using Javascript, HTML/CSS 🎈🎊
 
-The game goal is to KILL all the martians by clicking on them.
+The game goal is to KILL all the aliens by clicking on them.
 
 ## 🌱  How to start this project
 
