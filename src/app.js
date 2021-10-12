@@ -4,13 +4,13 @@ const randomStart = () => {
     return `${num}%`;
 };
 
-const randomColorAnimation = (array) => {
+const randomAlien = (array) => {
     return array[Math.floor(Math.random() * array.length)];
 };
 
-const clearWindow = () => {
-    let container = document.querySelector("#container");
-    while (container.firstChild) {
+const clearWindow = (isPower) => {
+    while (myContainer.firstChild) {
+        if(isPower) incrementPoints();
         container.removeChild(container.firstChild);
     }
 };
@@ -25,7 +25,8 @@ const clearWindowPower = (element) => {
     // });
 
     // Eliminando todos los hijos de un elemento
-    clearWindow();
+    let withPower = true;
+    clearWindow(withPower);
 
     let powerOff = document.querySelector(`#${element.target.id}`);
     powerOff.classList.remove("power-active");
@@ -54,32 +55,42 @@ const alienArrivesTop = (element) => {
     killedMartian.parentNode.removeChild(killedMartian);
 
     removeLife();
-    if(lifes === 0) {
+    if (lifes === 0) {
         clearInterval(alienInterval);
         clearWindow();
         alert("You Lose!");
     }
 };
 
+const incrementPoints = () => {
+   points++;
+   document.querySelector("#actual-points").innerHTML = points;
+};
+
 // los aliens mueren onclick
-function killAlien(element) {
-    // si muere un alien 'neon' baja la velociadad de los aliens en pantalla
+const killAlien = (element) => {
+    // si muere un alien 'neon' añade un poder a la lista de poderes
     if (element.target.classList[3] === "neonClass") addPower();
     let killedMartian = document.querySelector(`#${element.target.id}`).parentNode;
     killedMartian.parentNode.removeChild(killedMartian);
-}
+    
+    incrementPoints();
+};
 
-// Declaración de variables
-let aliensColorAnimation = [["orangered", "9s linear"], ["cyan", "6s ease"], ["deeppink", "4s ease-out"], ["lime", "10s ease-in-out"], ["red", "10s ease-in"], ["yellow", "5s linear"]]
-let alienId = 0;
-let powerCount = 0;
-let lifes = 10;
+const addPowersAndLifes = () => {
+    for (let i = 0; i < 10; i++) document.querySelector(".powers-container").innerHTML += `<button id="power${i}" class="fab fa-superpowers power"></button>`;
+    for (let j = 0; j < 10; j++) document.querySelector(".lifes-container").innerHTML += `<i class="fas fa-heart life"></i>`;
+};
 
+const startGame = (time) => {
+    alert("start!");
+    alienInterval = window.setInterval(renderAlien, time); // Define cada cuanto tiempo (ms) aparece un alien
+};
+// función que crea los aliens
 const renderAlien = (isNeon = null) => {
-    let myContainer = document.querySelector("#container");
-    let myAlien = document.createElement("div");
-    let porcentaje = randomStart();
-    let alienState = isNeon ? ["white", "neon 3s linear", "neonClass"] : randomColorAnimation(aliensColorAnimation);
+    let myAlien = document.createElement("div"),
+        porcentaje = randomStart(),
+        alienState = isNeon ? ["white", "neon 3s linear", "neonClass"] : randomAlien(typesOfAliens);
 
     myAlien.onclick = killAlien;
     myAlien.classList.add("alienDiv");
@@ -101,13 +112,21 @@ const renderAlien = (isNeon = null) => {
     alienId++;
 
     if (alienId % 15 == 0) renderAlien(true);
-}
+}; // window.onload = renderAlien(true);
 
-// window.onload = renderAlien(true);
+// Declaración de variables globales
+let typesOfAliens = [["orangered", "6s linear"], ["cyan", "5s ease"], ["deeppink", "4s ease-out"], ["lime", "7s ease-in-out"], ["red", "7s ease-in"], ["yellow", "5s linear"]],
+    alienId = 0,
+    powerCount = 0,
+    lifes = 10,
+    points = 0,
+    myContainer = document.querySelector("#container");
+
+// askForPlaying();
+addPowersAndLifes();
+startGame(2000);
 
 
-// Define cada cuanto tiempo (ms) aparece un alien
-let alienInterval = window.setInterval(renderAlien, 1000);
 
 // Difficulty:
 // 700 ms => medium

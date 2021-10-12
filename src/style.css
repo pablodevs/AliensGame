@@ -1,3 +1,8 @@
+@font-face {
+  font-family: myAtariFont;
+  src: url(AtariSmall.ttf);
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -10,6 +15,7 @@ header {
   height: 2%;
 }
 
+/* LIFES & POWERS styles */
 .footer {
   position: fixed;
   left: 0;
@@ -24,18 +30,13 @@ header {
 .powers-container {
   height: 100%;
   background-color: rgb(63, 63, 63);
-  width: 35%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 button.power {
   border: none;
   color: black;
   background-color: rgb(63, 63, 63);
-  font-size: 25px;
   font-weight: 1000;
 }
 button.power-active {
@@ -55,23 +56,41 @@ button.power-active {
 .lifes-container {
   height: 100%;
   background-color: rgb(90, 250, 90);
-  width: 30%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 .life {
   color: red;
-  font-size: 25px;
 }
 
+/* POINTS counter */
+.points {
+  position: absolute;
+  right: 0%;
+  top: 12px;
+  margin: 7px;
+  padding: 17px;
+  border-radius: 20%;
+  height: fit-content;
+  width: fit-content;
+
+  font-family: myAtariFont;
+  color: rgb(251, 255, 0);
+  font-size: 20px;
+  text-align: center;
+}
+#actual-points {
+  font-size: 38px;
+  z-index: 1;
+}
+
+/* ALIEN styles */
 #container {
   position: relative;
   min-height: 93%;
   background-color: rgb(0, 0, 0);
 }
+
 .alienDiv {
   width: fit-content;
   position: absolute;
@@ -85,8 +104,45 @@ button.power-active {
   animation: flicker 1.5s infinite;
 }
 
-
-
+/* RESPONSIVE STYLES */
+@media screen and (min-width: 718px) {
+  div.lifes-container, div.powers-container {
+    font-size: 25px;
+    width: 359px;
+    justify-content: space-between;
+    padding: 0 10px 0 10px;
+  }
+}
+@media screen and (min-width: 500px) and (max-width: 717px) {
+  div.lifes-container, div.powers-container {
+    width: fit-content;
+    padding: 0;
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 717px) {
+  .life {
+    margin: 0 5px 0 5px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .footer {
+    height: fit-content;
+    flex-direction: column;
+  }
+  div.lifes-container, div.powers-container {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 25px;
+    padding: 5px;
+  }
+}
+@media screen and (max-width: 360px) {
+  div.lifes-container, div.powers-container {
+    font-size: 15px;
+    padding: 3px;
+  }
+}
 
 /* ANIMATIONS */
 @keyframes fly {
