@@ -1,3 +1,11 @@
+/* eslint-disable */
+// import "bootstrap";
+// import "./style.css";
+
+// import "./assets/img/rigo-baby.jpg";
+// import "./assets/img/4geeks.ico";
+
+
 // Declaración de funciones
 const randomStart = () => {
     let num = Math.floor(Math.random() * 90);
