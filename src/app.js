@@ -141,9 +141,14 @@ let typesOfAliens = [["orangered", "6s linear"], ["cyan", "5s ease"], ["deeppink
     points = 0,
     myContainer = document.querySelector("#container");
 
-// askForPlaying();
-addPowersAndLifes();
-startGame(1000);
+var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+    keyboard: false
+})
+
+
+// difficultySlection();
+// addPowersAndLifes();
+// startGame(1000);
 
 
 

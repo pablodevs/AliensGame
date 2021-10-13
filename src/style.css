@@ -33,13 +33,14 @@ header {
   display: flex;
   align-items: center;
 }
-button.power {
+div button.power {
   border: none;
+  cursor: auto;
   color: black;
   background-color: rgb(63, 63, 63);
   font-weight: 1000;
 }
-button.power-active {
+div button.power-active {
   cursor: pointer;
   color: #fff;
   text-shadow:

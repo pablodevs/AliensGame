@@ -14,19 +14,47 @@
     <!-- GAMES font -->
     <style>
         @import url('http://fonts.cdnfonts.com/css/games');
-</style>
+    </style>
 
     <title>Kill the Martians</title>
 </head>
 
 <body>
     <header></header>
+
+
+
     <div id="container"></div>
     <div class="points"><strong id="actual-points">0</strong><br>POINTS</div>
     <div class="footer">
         <div class="powers-container"></div>
         <div class="lifes-container"></div>
     </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { Toast } from 'bootstrap.esm.min.js'
+
+        Array.from(document.querySelectorAll('.toast'))
+            .forEach(toastNode => new Toast(toastNode))
+    </script>
     <script src="app.js"></script>
     <!-- Bootstrap Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
