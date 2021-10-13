@@ -8,10 +8,30 @@ const randomAlien = (array) => {
     return array[Math.floor(Math.random() * array.length)];
 };
 
+const removeShine = () => {
+    myContainer.classList.remove("shine-effect")
+};
+
 const clearWindow = (isPower) => {
-    while (myContainer.firstChild) {
-        if(isPower) incrementPoints();
-        container.removeChild(container.firstChild);
+    if (isPower) {
+        myContainer.classList.add("shine-effect");
+        // Remove class shine-effect when animation end
+        myContainer.addEventListener("webkitAnimationEnd", removeShine);
+        myContainer.addEventListener("animationend", removeShine);
+
+        let delay = 200; // 0.4 second
+        setTimeout(() => {
+            while (myContainer.firstChild) {
+                incrementPoints();
+                container.removeChild(container.firstChild);
+            }
+        }, delay);
+    }
+
+    else {
+        while (myContainer.firstChild) {
+            container.removeChild(container.firstChild);
+        }
     }
 };
 
@@ -25,8 +45,7 @@ const clearWindowPower = (element) => {
     // });
 
     // Eliminando todos los hijos de un elemento
-    let withPower = true;
-    clearWindow(withPower);
+    clearWindow(true);
 
     let powerOff = document.querySelector(`#${element.target.id}`);
     powerOff.classList.remove("power-active");
@@ -63,8 +82,8 @@ const alienArrivesTop = (element) => {
 };
 
 const incrementPoints = () => {
-   points++;
-   document.querySelector("#actual-points").innerHTML = points;
+    points++;
+    document.querySelector("#actual-points").innerHTML = points;
 };
 
 // los aliens mueren onclick
@@ -73,7 +92,7 @@ const killAlien = (element) => {
     if (element.target.classList[3] === "neonClass") addPower();
     let killedMartian = document.querySelector(`#${element.target.id}`).parentNode;
     killedMartian.parentNode.removeChild(killedMartian);
-    
+
     incrementPoints();
 };
 
@@ -111,7 +130,7 @@ const renderAlien = (isNeon = null) => {
 
     alienId++;
 
-    if (alienId % 15 == 0) renderAlien(true);
+    if (alienId % 3 == 0) renderAlien(true);
 }; // window.onload = renderAlien(true);
 
 // Declaración de variables globales
