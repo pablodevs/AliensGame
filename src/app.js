@@ -130,7 +130,7 @@ const renderAlien = (isNeon = null) => {
 
     alienId++;
 
-    if (alienId % 3 == 0) renderAlien(true);
+    if (alienId % 10 == 0) renderAlien(true);
 }; // window.onload = renderAlien(true);
 
 // Declaración de variables globales
@@ -143,7 +143,7 @@ let typesOfAliens = [["orangered", "6s linear"], ["cyan", "5s ease"], ["deeppink
 
 // askForPlaying();
 addPowersAndLifes();
-startGame(900);
+startGame(1000);
 
 
 
