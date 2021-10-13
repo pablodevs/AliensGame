@@ -143,7 +143,7 @@ let typesOfAliens = [["orangered", "6s linear"], ["cyan", "5s ease"], ["deeppink
 
 // askForPlaying();
 addPowersAndLifes();
-startGame(2000);
+startGame(900);
 
 
 
