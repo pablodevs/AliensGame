@@ -18,10 +18,6 @@
       integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
       crossorigin="anonymous"
     />
-    <!-- GAMES font -->
-    <style>
-      @import url("http://fonts.cdnfonts.com/css/games");
-    </style>
 
     <title>Kill the Martians</title>
   </head>
@@ -37,41 +33,105 @@
     </div>
 
     <!-- Modal -->
-    <div id="myModal" class="modal" tabindex="-1">
-      <div class="modal-dialog">
+    <div
+      class="modal"
+      id="mymodal1"
+      aria-hidden="true"
+      aria-labelledby="mymodalLabel1"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
+          <div class="modal-header justify-content-center">
+            <h3 class="modal-title" id="mymodalLabel1">
+              Choose the difficulty
+            </h3>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="container-fluid">
+              <div
+                class="row d-flex justify-content-sm-between justify-content-center"
+              >
+                <div class="col-sm-3 my-sm-0 my-2">
+                  <button
+                    value="1300"
+                    class="btn btn-success btn-lg difficulty"
+                    data-bs-target="#mymodal2"
+                    data-bs-toggle="modal"
+                  >
+                    Easy
+                  </button>
+                </div>
+                <div class="col-sm-3 my-sm-0 my-2">
+                  <button
+                    value="1000"
+                    class="btn btn-info btn-lg difficulty"
+                    data-bs-target="#mymodal2"
+                    data-bs-toggle="modal"
+                  >
+                    Medium
+                  </button>
+                </div>
+                <div class="col-sm-3 my-sm-0 my-2">
+                  <button
+                    value="800"
+                    class="btn btn-danger btn-lg difficulty"
+                    data-bs-target="#mymodal2"
+                    data-bs-toggle="modal"
+                  >
+                    Hard
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <script type="module">
-      import { Toast } from "bootstrap.esm.min.js";
+    <div
+      class="modal"
+      data-bs-keyboard="false"
+      id="mymodal2"
+      aria-hidden="true"
+      aria-labelledby="mymodalLabel2"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center">
+            <h3 class="modal-title" id="mymodalLabel2">Choose wisely</h3>
+          </div>
+          <div class="modal-footer">
+            <div class="container-fluid">
+              <div
+                class="row d-flex justify-content-sm-between justify-content-center"
+              >
+                <div class="col-sm-3 my-sm-0 my-2">
+                  <button
+                    class="btn btn-success btn-lg"
+                    data-bs-target="#mymodal1"
+                    data-bs-toggle="modal"
+                  >
+                    Go back
+                  </button>
+                </div>
+                <div class="col-sm-3 my-sm-0 my-2">
+                  <button
+                    id="start"
+                    value="1500"
+                    class="btn btn-warning btn-lg"
+                    data-bs-dismiss="modal"
+                  >
+                    Start!
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      Array.from(document.querySelectorAll(".toast")).forEach(
-        toastNode => new Toast(toastNode)
-      );
-    </script>
     <script src="app.js"></script>
     <!-- Bootstrap Scripts -->
     <script

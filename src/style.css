@@ -16,6 +16,17 @@ header {
   height: 2%;
 }
 
+#start {
+  font-weight: bold;
+}
+div.col-sm-3 button {
+  width: 7rem;
+}
+div.row,
+div.row > * {
+  padding: 0;
+}
+
 /* LIFES & POWERS styles */
 .footer {
   position: fixed;

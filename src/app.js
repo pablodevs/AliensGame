@@ -3,6 +3,7 @@ import "bootstrap";
 import "./style.css";
 
 // Declaración de funciones
+
 const randomStart = () => {
   let num = Math.floor(Math.random() * 90);
   return `${num}%`;
@@ -79,9 +80,9 @@ const alienArrivesTop = element => {
 
   removeLife();
   if (lifes === 0) {
-    clearInterval(alienInterval);
     clearWindow();
-    alert("You Lose!");
+    clearInterval(interval); // Termina el juego
+    myModal.toggle();
   }
 };
 
@@ -101,6 +102,10 @@ const killAlien = element => {
   incrementPoints();
 };
 
+const setDifficulty = event => {
+  document.querySelector("#start").value = event.target.value;
+};
+
 const addPowersAndLifes = () => {
   for (let i = 0; i < 10; i++)
     document.querySelector(
@@ -112,10 +117,13 @@ const addPowersAndLifes = () => {
     ).innerHTML += `<i class="fas fa-heart life"></i>`;
 };
 
-const startGame = time => {
-  alert("start!");
-  alienInterval = window.setInterval(renderAlien, time); // Define cada cuanto tiempo (ms) aparece un alien
+const startGame = event => {
+  powerCount = 0;
+  lifes = 10;
+  points = 0;
+  interval = window.setInterval(renderAlien, event.target.value); // Define cada cuanto tiempo (ms) aparece un alien
 };
+
 // función que crea los aliens
 const renderAlien = (isNeon = null) => {
   let myAlien = document.createElement("div"),
@@ -164,30 +172,24 @@ let typesOfAliens = [
     ["yellow", "5s linear"]
   ],
   alienId = 0,
-  powerCount = 0,
-  lifes = 10,
+  powerCount,
+  lifes,
   points = 0,
-  myContainer = document.querySelector("#container");
+  myContainer = document.querySelector("#container"),
+  interval;
 
-// var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
-//   keyboard: false
-// });
+document
+  .querySelectorAll(".difficulty")
+  .forEach(e => e.addEventListener("click", setDifficulty));
+document.querySelector("#start").addEventListener("click", startGame);
 
-// difficultySlection();
-// addPowersAndLifes();
-// startGame(1000);
+addPowersAndLifes();
 
-// Difficulty:
-// 700 ms => medium
+// Aparece el Modal
+const myModal = new bootstrap.Modal(document.querySelector("#mymodal1"), {
+  keyboard: false
+});
+myModal.toggle();
 
-// var myVar = setInterval(myTimer, 1000);
-
-// function myTimer() {
-//   var d = new Date();
-//   var t = d.toLocaleTimeString();
-//   document.getElementById("demo").innerHTML = t;
-// }
-
-// function myStopFunction() {
-//   clearInterval(myVar);
-// }
+////     Falta el pausar el juego + Renaudar cuando
+////     el usuario esté fuera de la pantalla
