@@ -81,7 +81,16 @@ const alienArrivesTop = element => {
   removeLife();
   if (lifes === 0) {
     clearWindow();
+
+    let myPowerContainer = document.querySelector(".powers-container");
+
+    myPowerContainer.childNodes.forEach(child => {
+      child.removeEventListener("click", clearWindowPower);
+      child.classList.remove("power-active");
+    });
     clearInterval(interval); // Termina el juego
+    document.querySelector("#mymodalLabel1").innerHTML =
+      "Pathetic... Wanna try again?";
     myModal.toggle();
   }
 };
@@ -117,11 +126,49 @@ const addPowersAndLifes = () => {
     ).innerHTML += `<i class="fas fa-heart life"></i>`;
 };
 
+const pauseAll = () => {
+  window.removeEventListener("keydown", isEscKey);
+  // Pause all the aliens
+  let children = myContainer.childNodes;
+  children.forEach(child => {
+    clearInterval(interval);
+    child.style.animationPlayState = "paused";
+  });
+  // Toggle resume modal
+  myPauseModal.toggle();
+};
+
+const isEscKey = e => {
+  if (e.key == "Escape") {
+    pauseAll();
+  }
+};
+
 const startGame = event => {
   powerCount = 0;
   lifes = 10;
   points = 0;
-  interval = window.setInterval(renderAlien, event.target.value); // Define cada cuanto tiempo (ms) aparece un alien
+
+  // Render pause modal
+  myPauseModal = new bootstrap.Modal(document.querySelector("#pauseModal"), {
+    backdrop: "static",
+    keyboard: false
+  });
+  // Esc key event
+  window.addEventListener("keydown", isEscKey);
+
+  difficulty = event.target.value;
+  interval = window.setInterval(renderAlien, difficulty); // Define cada cuanto tiempo (ms) aparece un alien
+};
+
+const resumeGame = () => {
+  window.addEventListener("keydown", isEscKey);
+  let children = myContainer.childNodes;
+  children.forEach(child => {
+    clearInterval(interval);
+    child.style.animationPlayState = "running";
+  });
+  interval = window.setInterval(renderAlien, difficulty);
 };
 
 // función que crea los aliens
@@ -176,20 +223,26 @@ let typesOfAliens = [
   lifes,
   points = 0,
   myContainer = document.querySelector("#container"),
-  interval;
+  interval,
+  difficulty,
+  myPauseModal;
 
+// Add Events
 document
   .querySelectorAll(".difficulty")
   .forEach(e => e.addEventListener("click", setDifficulty));
 document.querySelector("#start").addEventListener("click", startGame);
+document.querySelector("#resumeButton").addEventListener("click", resumeGame);
 
+// Añade al html las etiquetas de poderes y vidas
 addPowersAndLifes();
 
-// Aparece el Modal
 const myModal = new bootstrap.Modal(document.querySelector("#mymodal1"), {
+  backdrop: "static",
+  keyboard: false
+});
+const myModal2 = new bootstrap.Modal(document.querySelector("#mymodal2"), {
+  backdrop: "static",
   keyboard: false
 });
 myModal.toggle();
-
-////     Falta el pausar el juego + Renaudar cuando
-////     el usuario esté fuera de la pantalla
