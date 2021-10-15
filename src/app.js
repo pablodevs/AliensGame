@@ -2,29 +2,31 @@
 import "bootstrap";
 import "./style.css";
 
-// Declaración de funciones
+// ---------- Functions declaration ---------- //
 
-const randomStart = () => {
-  let num = Math.floor(Math.random() * 90);
+const randomPercentage = limit => {
+  let num = Math.floor(Math.random() * limit);
   return `${num}%`;
 };
 
-const randomAlien = array => {
+const randomElement = array => {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-const removeShine = () => {
+const removeShineEffect = () => {
   myContainer.classList.remove("shine-effect");
 };
 
-const clearWindow = isPower => {
-  if (isPower) {
+const clearWindow = withPower => {
+  if (withPower) {
     myContainer.classList.add("shine-effect");
-    // Remove class shine-effect when animation end
-    myContainer.addEventListener("webkitAnimationEnd", removeShine);
-    myContainer.addEventListener("animationend", removeShine);
 
-    let delay = 200; // 0.4 second
+    // Remove class shine-effect when animation end
+    myContainer.addEventListener("webkitAnimationEnd", removeShineEffect);
+    myContainer.addEventListener("animationend", removeShineEffect);
+
+    // Remove aliens on screen with a delay of 0.4 seconds
+    const delay = 200;
     setTimeout(() => {
       while (myContainer.firstChild) {
         incrementPoints();
@@ -38,21 +40,12 @@ const clearWindow = isPower => {
   }
 };
 
-// ----------- PROBLEMA -----------
-//Linea 16: << el.style.animation = "fly linear 8s" >> resetea un poco la animación
-const clearWindowPower = element => {
-  // no he logrado que funcione el ralentizarlos...
-  // let aliensList = document.querySelectorAll(".alienDiv")
-  // aliensList.forEach(el => {
-  //    el.style.animation = "fly linear 8s";
-  // });
-
-  // Eliminando todos los hijos de un elemento
+const clearWindowWithPower = element => {
   clearWindow(true);
 
   let powerOff = document.querySelector(`#${element.target.id}`);
   powerOff.classList.remove("power-active");
-  powerOff.removeEventListener("click", clearWindowPower);
+  powerOff.removeEventListener("click", clearWindowWithPower);
   powerCount--;
 };
 
@@ -61,38 +54,52 @@ const addPower = () => {
     powerCount++;
     let powerList = document.querySelectorAll(".power");
     powerList[powerCount - 1].classList.add("power-active");
-    powerList[powerCount - 1].addEventListener("click", clearWindowPower);
+    powerList[powerCount - 1].addEventListener("click", clearWindowWithPower);
   }
 };
 
 const removeLife = () => {
   lifes--;
-  let lifesList = document.querySelectorAll(".life");
-  lifesList[lifes].style.color = "white";
+  let lifesList = document.querySelectorAll(".red-heart");
+  lifesList[lifes].classList.remove("red-heart");
 };
 
-// los aliens mueren por defecto al llegar al final de la animación
+const deadFunction = () => {
+  // FUNCTION CALLED WHEN THE GAME IS OVER
+  // Remove aliens on screen
+  clearWindow();
+  points = -1;
+  alienId = 0;
+  incrementPoints();
+
+  // Reset powers
+  let myPowerContainer = document.querySelector(".powers-container");
+  myPowerContainer.childNodes.forEach(child => {
+    child.removeEventListener("click", clearWindowWithPower);
+    child.classList.remove("power-active");
+  });
+
+  // Reset lifes
+  let lifesList = document.querySelector(".lifes-container").childNodes;
+  lifesList.forEach(life => life.classList.add("red-heart"));
+
+  // Stop aliens from appearing
+  clearInterval(interval);
+
+  // Ask for playing again
+  document.querySelector("#mymodalLabel1").innerHTML =
+    "Pathetic... Wanna try again?";
+  myModal.toggle();
+};
+
+// Aliens die when animation ends: "remove alienDiv"
 const alienArrivesTop = element => {
-  let killedMartian = document.querySelector(
-    `#${element.target.childNodes[0].id}`
-  ).parentNode;
-  killedMartian.parentNode.removeChild(killedMartian);
+  let deadAlien = document.querySelector(`#${element.target.childNodes[0].id}`)
+    .parentNode;
+  deadAlien.parentNode.removeChild(deadAlien);
 
   removeLife();
-  if (lifes === 0) {
-    clearWindow();
-
-    let myPowerContainer = document.querySelector(".powers-container");
-
-    myPowerContainer.childNodes.forEach(child => {
-      child.removeEventListener("click", clearWindowPower);
-      child.classList.remove("power-active");
-    });
-    clearInterval(interval); // Termina el juego
-    document.querySelector("#mymodalLabel1").innerHTML =
-      "Pathetic... Wanna try again?";
-    myModal.toggle();
-  }
+  if (lifes === 0) deadFunction();
 };
 
 const incrementPoints = () => {
@@ -100,13 +107,12 @@ const incrementPoints = () => {
   document.querySelector("#actual-points").innerHTML = points;
 };
 
-// los aliens mueren onclick
+// Alien die onClick
 const killAlien = element => {
-  // si muere un alien 'neon' añade un poder a la lista de poderes
+  // If neon alien is killed, add 1 power to the power list
   if (element.target.classList[3] === "neonClass") addPower();
-  let killedMartian = document.querySelector(`#${element.target.id}`)
-    .parentNode;
-  killedMartian.parentNode.removeChild(killedMartian);
+  let deadAlien = document.querySelector(`#${element.target.id}`).parentNode;
+  deadAlien.parentNode.removeChild(deadAlien);
 
   incrementPoints();
 };
@@ -115,25 +121,18 @@ const setDifficulty = event => {
   document.querySelector("#start").value = event.target.value;
 };
 
-const addPowersAndLifes = () => {
-  for (let i = 0; i < 10; i++)
-    document.querySelector(
-      ".powers-container"
-    ).innerHTML += `<button id="power${i}" class="fab fa-superpowers power"></button>`;
-  for (let j = 0; j < 10; j++)
-    document.querySelector(
-      ".lifes-container"
-    ).innerHTML += `<i class="fas fa-heart life"></i>`;
-};
-
 const pauseAll = () => {
+  // FUNCTION CALLED WHEN THE PLAYER FOCUS ON OTHER WINDOW OR PRESS 'Esc' KEY
   window.removeEventListener("keydown", isEscKey);
-  // Pause all the aliens
+  window.removeEventListener("blur", pauseAll);
+
+  // Stop all aliens (animation: "paused")
   let children = myContainer.childNodes;
   children.forEach(child => {
     clearInterval(interval);
     child.style.animationPlayState = "paused";
   });
+
   // Toggle resume modal
   myPauseModal.toggle();
 };
@@ -145,6 +144,7 @@ const isEscKey = e => {
 };
 
 const startGame = event => {
+  // FUNCTION CALLED WHEN THE PLAYER CLICKES THE START BUTTON
   powerCount = 0;
   lifes = 10;
   points = 0;
@@ -154,15 +154,19 @@ const startGame = event => {
     backdrop: "static",
     keyboard: false
   });
-  // Esc key event
+
+  // Esc key and change window event
   window.addEventListener("keydown", isEscKey);
+  window.addEventListener("blur", pauseAll);
 
   difficulty = event.target.value;
-  interval = window.setInterval(renderAlien, difficulty); // Define cada cuanto tiempo (ms) aparece un alien
+  interval = window.setInterval(renderAlien, difficulty);
 };
 
 const resumeGame = () => {
   window.addEventListener("keydown", isEscKey);
+  window.addEventListener("blur", pauseAll);
+
   let children = myContainer.childNodes;
   children.forEach(child => {
     clearInterval(interval);
@@ -171,45 +175,51 @@ const resumeGame = () => {
   interval = window.setInterval(renderAlien, difficulty);
 };
 
-// función que crea los aliens
+// ---------- Render aliens function ---------- //
+
 const renderAlien = (isNeon = null) => {
   let myAlien = document.createElement("div"),
-    porcentaje = randomStart(),
+    porcentaje = randomPercentage(90),
     alienState = isNeon
       ? ["white", "neon 3s linear", "neonClass"]
-      : randomAlien(typesOfAliens);
+      : randomElement(typesOfAliens);
 
   myAlien.onclick = killAlien;
   myAlien.classList.add("alienDiv");
   myAlien.style.left = isNeon ? "100%" : porcentaje;
   if (isNeon) myAlien.style.top = porcentaje;
-  // animación
+
+  // Add animation
   myAlien.style.WebkitAnimation = isNeon
     ? alienState[1]
     : `fly ${alienState[1]}`; // Code for Chrome, Safari and Opera
   myAlien.style.animation = isNeon ? alienState[1] : `fly ${alienState[1]}`; // Standard syntax
-  // añadimos el dibujo del alien
+
+  // Add alien drawing from font awesome
   myAlien.innerHTML = `<i id="alien${alienId}" class="fab fa-reddit-alien alien ${
     isNeon ? alienState[2] : ""
   }" style="color: ${alienState[0]};"></i>`;
 
   myContainer.appendChild(myAlien);
 
-  // Code for Chrome, Safari and Opera
+  // Events when animation ends
   document
     .querySelector(`#alien${alienId}`)
-    .parentNode.addEventListener("webkitAnimationEnd", alienArrivesTop);
-  // Standard syntax
+    .parentNode.addEventListener("webkitAnimationEnd", alienArrivesTop); // Code for Chrome, Safari and Opera
   document
     .querySelector(`#alien${alienId}`)
-    .parentNode.addEventListener("animationend", alienArrivesTop);
+    .parentNode.addEventListener("animationend", alienArrivesTop); // Standard syntax
 
   alienId++;
 
-  if (alienId % 10 == 0) renderAlien(true);
-}; // window.onload = renderAlien(true);
+  // Each 12 aliens, render a special Neon Alien with powers
+  if (alienId % 12 == 0) {
+    alienId = 0;
+    renderAlien(true);
+  }
+};
+// ---------- Global variables ---------- //
 
-// Declaración de variables globales
 let typesOfAliens = [
     ["orangered", "6s linear"],
     ["cyan", "5s ease"],
@@ -221,21 +231,32 @@ let typesOfAliens = [
   alienId = 0,
   powerCount,
   lifes,
-  points = 0,
+  points,
   myContainer = document.querySelector("#container"),
   interval,
   difficulty,
   myPauseModal;
 
-// Add Events
+// ---------- Global Events ---------- //
+
 document
   .querySelectorAll(".difficulty")
   .forEach(e => e.addEventListener("click", setDifficulty));
 document.querySelector("#start").addEventListener("click", startGame);
 document.querySelector("#resumeButton").addEventListener("click", resumeGame);
 
-// Añade al html las etiquetas de poderes y vidas
-addPowersAndLifes();
+// ---------- Add Powers and lifes ---------- //
+
+for (let i = 0; i < 10; i++)
+  document.querySelector(
+    ".powers-container"
+  ).innerHTML += `<button id="power${i}" class="fab fa-superpowers power"></button>`;
+for (let j = 0; j < 10; j++)
+  document.querySelector(
+    ".lifes-container"
+  ).innerHTML += `<i class="fas fa-heart red-heart"></i>`;
+
+// ---------- Modals configuration ---------- //
 
 const myModal = new bootstrap.Modal(document.querySelector("#mymodal1"), {
   backdrop: "static",

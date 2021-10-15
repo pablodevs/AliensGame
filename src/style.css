@@ -1,8 +1,3 @@
-/* @font-face {
-  font-family: myAtariFont;
-  src: url("AtariSmall.ttf") format("truetype");
-} */
-
 html,
 body {
   height: 100%;
@@ -15,7 +10,14 @@ header {
   background: rgb(255, 0, 0);
   height: 2%;
 }
-
+samp {
+  /* Press Esc message */
+  color: rgba(0, 255, 255, 0.582);
+  font-size: 25px;
+  position: absolute;
+  top: 4%;
+  left: 3%;
+}
 #start {
   font-weight: bold;
 }
@@ -65,7 +67,7 @@ div button.power-active {
   display: flex;
   align-items: center;
 }
-.life {
+.red-heart {
   color: red;
 }
 
@@ -80,7 +82,6 @@ div button.power-active {
   height: fit-content;
   width: fit-content;
 
-  /* font-family: myAtariFont; */
   color: rgb(251, 255, 0);
   font-size: 20px;
   text-align: center;
