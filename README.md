@@ -33,4 +33,4 @@ $ npm run start
 ```
 
 ---
-⌨️ with ❤️ by [peibol888](https://github.com/peibol888) 😊
+Made with ❤️ by [peibol888](https://github.com/peibol888) 😊
