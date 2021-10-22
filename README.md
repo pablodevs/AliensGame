@@ -6,8 +6,8 @@ The game goal is to KILL all the aliens by clicking on them.
 
 * [HTML](https://es.wikipedia.org/wiki/HTML5)
 * [CSS](https://developer.mozilla.org/es/docs/Web/CSS)
-* [Javasript](https://developer.mozilla.org/es/docs/Web/JavaScript)
 * [Bootstrap](https://getbootstrap.com/)
+* [Javasript](https://developer.mozilla.org/es/docs/Web/JavaScript)
 
 ## Authors ✒️
 
