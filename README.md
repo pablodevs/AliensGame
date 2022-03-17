@@ -1,6 +1,6 @@
 # 👽 Aliens game using Javascript, HTML/CSS 👽
 
-The game goal is to KILL all the aliens by clicking on them.
+The goal of the game is to KILL all the aliens by clicking on them. Watch out for radioactive aliens!
 
 ## Languages 🛠️
 
